@@ -1,0 +1,226 @@
+/* TablesSetup.css */
+@import './RestaurantDetails.css';
+
+/* Override or add styles specific to TablesSetup */
+
+/* Adjusting white-box for Tables Setup */
+.white-box {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.white-box h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+}
+
+.box-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.box-header-flex h3 {
+  margin-bottom: 0.25rem;
+}
+
+.optional-text {
+  color: #9CA3AF;
+  font-weight: 400;
+  margin-left: 0.25rem;
+}
+
+.box-subtitle {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.add-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary-light, #E0E7FF);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.add-btn:hover {
+  background: var(--primary-light, #EEF2FF);
+}
+
+/* List / Grid for Table Types */
+.table-types-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.list-header {
+  display: flex;
+  align-items: center;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.list-row {
+  display: flex;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.list-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.col-type {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.type-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background-color: var(--primary-light, #EEF2FF);
+  color: var(--primary);
+  border-radius: 8px;
+}
+
+.type-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.premium-tag {
+  color: var(--primary);
+  margin-left: 0.25rem;
+}
+
+.col-count {
+  flex: 1.5;
+  display: flex;
+  align-items: center;
+}
+
+.counter-widget {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.counter-btn {
+  background: white;
+  border: none;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #6B7280;
+  transition: background 0.2s;
+}
+
+.counter-btn:hover {
+  background: #F3F4F6;
+  color: var(--text-main);
+}
+
+.count-value {
+  width: 32px;
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-main);
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  line-height: 28px;
+}
+
+.col-capacity {
+  flex: 1.5;
+  display: flex;
+  align-items: center;
+}
+
+.capacity-text {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.col-action {
+  flex: 0.5;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.more-btn {
+  background: transparent;
+  border: none;
+  color: #9CA3AF;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+}
+
+.more-btn:hover {
+  color: var(--text-main);
+  background: #F3F4F6;
+}
+
+/* Specific Info Card overrides for Tables */
+.tables-info {
+  margin-top: 0;
+}
+
+.tables-image-wrapper {
+  background-color: #F8F9FF; /* subtle bluish bg similar to image */
+  padding: 1.5rem;
+}
+
+.info-benefits .info-header-text {
+  margin-bottom: 1.5rem;
+}
+
+.info-benefits .info-header-text h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+}
+
+.info-benefits .info-header-text p {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
