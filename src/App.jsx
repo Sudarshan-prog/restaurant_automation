@@ -1,9 +1,9 @@
 import React from 'react';
-import Setup from './Setup';
+import RestaurantDetails from './RestaurantDetails';
 
 function App() {
   return (
-    <Setup />
+    <RestaurantDetails />
   );
 }
 
