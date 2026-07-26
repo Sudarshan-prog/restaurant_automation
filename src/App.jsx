@@ -3,6 +3,7 @@ import Auth from './Auth';
 import Setup from './Setup';
 import RestaurantDetails from './RestaurantDetails';
 import TablesSetup from './TablesSetup';
+import MenuSetup from './MenuSetup';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('auth');
@@ -17,6 +18,7 @@ function App() {
       {currentPage === 'setup' && <Setup onNext={() => navigateTo('details')} />}
       {currentPage === 'details' && <RestaurantDetails onBack={() => navigateTo('setup')} onNext={() => navigateTo('tables')} />}
       {currentPage === 'tables' && <TablesSetup onBack={() => navigateTo('details')} onNext={() => navigateTo('menu')} />}
+      {currentPage === 'menu' && <MenuSetup onBack={() => navigateTo('tables')} onNext={() => navigateTo('finish')} />}
     </>
   );
 }
