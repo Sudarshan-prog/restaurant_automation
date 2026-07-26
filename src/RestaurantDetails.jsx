@@ -2,7 +2,7 @@ import React from 'react';
 import './RestaurantDetails.css';
 import mapAddressImg from './assets/map_address.png';
 
-function RestaurantDetails() {
+function RestaurantDetails({ onBack, onNext }) {
   return (
     <div className="setup-wrapper">
       <nav className="top-nav">
@@ -16,7 +16,6 @@ function RestaurantDetails() {
             <span className="logo-text-dark">Table</span><span className="logo-text-primary">Flow</span>
           </span>
         </div>
-        
         <div className="nav-actions">
           <button className="help-btn">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -227,14 +226,14 @@ function RestaurantDetails() {
             </div>
 
             <div className="form-actions">
-              <button className="btn-secondary">
+              <button className="btn-secondary" onClick={onBack}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight: '8px'}}>
                   <line x1="19" y1="12" x2="5" y2="12"></line>
                   <polyline points="12 19 5 12 12 5"></polyline>
                 </svg>
                 Back
               </button>
-              <button className="btn-primary">
+              <button className="btn-primary" onClick={onNext}>
                 Next 
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginLeft: '8px'}}>
                   <line x1="5" y1="12" x2="19" y2="12"></line>

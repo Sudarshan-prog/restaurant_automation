@@ -2,7 +2,7 @@ import React from 'react';
 import './Setup.css';
 import restaurantImg from './assets/restaurant.png';
 
-function Setup() {
+function Setup({ onNext }) {
   return (
     <div className="setup-wrapper">
       <nav className="top-nav">
@@ -133,7 +133,7 @@ function Setup() {
 
             <div className="form-actions">
               <button className="btn-secondary">Cancel</button>
-              <button className="btn-primary">
+              <button className="btn-primary" onClick={onNext}>
                 Next 
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="5" y1="12" x2="19" y2="12"></line>
