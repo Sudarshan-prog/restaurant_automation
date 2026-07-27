@@ -1,8 +1,9 @@
 .page-wrapper {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
   background: url('./assets/background.png') no-repeat center center;
   background-size: cover;
   background-color: #F9FAFB;

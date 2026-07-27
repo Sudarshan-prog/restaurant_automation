@@ -40,7 +40,7 @@
 .review-item {
   display: flex;
   align-items: center;
-  padding: 1.25rem 1.5rem;
+  padding: 1rem 1.5rem;
   border-bottom: 1px solid var(--border);
   transition: background-color 0.2s;
   cursor: pointer;
@@ -109,7 +109,7 @@
 .secure-box {
   background-color: #F9FAFB;
   border: 1px solid var(--border);
-  margin-top: 1.5rem;
+  margin-top: 1rem;
 }
 
 /* Specific Info Card overrides for Finish Setup */
@@ -119,7 +119,7 @@
 
 .finish-image-wrapper {
   background-color: #F8F9FF;
-  padding: 2rem;
+  padding: 1.5rem;
   display: flex;
   justify-content: center;
 }
