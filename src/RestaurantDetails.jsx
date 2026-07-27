@@ -2,12 +2,43 @@ import React from 'react';
 import './RestaurantDetails.css';
 import mapAddressImg from './assets/map_address.png';
 import { useRestaurant } from './RestaurantContext';
+import axios from 'axios';
 
 function RestaurantDetails({ onBack, onNext }) {
   const { settings, setSettings } = useRestaurant();
+  const [loading, setLoading] = React.useState(false);
 
   const handleChange = (field, value) => {
     setSettings(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleNext = async () => {
+    setLoading(true);
+    try {
+      const userId = localStorage.getItem('tableflow_user_id');
+      if (!userId) {
+        alert("User session not found. Please login again.");
+        return;
+      }
+      
+      const response = await axios.post('http://localhost:5000/api/restaurant/basic-info', {
+        userId,
+        name: settings.name,
+        email: settings.email,
+        phone: settings.phone,
+        cuisine: settings.cuisine,
+        address: settings.address,
+        city: settings.city
+      });
+      
+      localStorage.setItem('tableflow_restaurant_id', response.data.restaurant.id);
+      onNext();
+    } catch (error) {
+      console.error("Error saving restaurant info:", error);
+      alert(error.response?.data?.error || "Failed to save restaurant details. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -200,7 +231,7 @@ function RestaurantDetails({ onBack, onNext }) {
                     <svg className="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                     </svg>
-                    <input type="text" placeholder="Enter contact number" />
+                    <input type="text" placeholder="Enter contact number" value={settings.phone || ''} onChange={e => handleChange('phone', e.target.value)} />
                   </div>
                 </div>
                 <div className="form-group half">
@@ -209,7 +240,7 @@ function RestaurantDetails({ onBack, onNext }) {
                       <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
                       <polyline points="2 4 12 12 22 4"></polyline>
                     </svg>
-                    <input type="email" placeholder="Enter contact email" />
+                    <input type="email" placeholder="Enter contact email" value={settings.email || ''} onChange={e => handleChange('email', e.target.value)} />
                   </div>
                 </div>
               </div>
@@ -223,12 +254,14 @@ function RestaurantDetails({ onBack, onNext }) {
                 </svg>
                 Back
               </button>
-              <button className="btn-primary" onClick={onNext}>
-                Next 
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginLeft: '8px'}}>
-                  <line x1="5" y1="12" x2="19" y2="12"></line>
-                  <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
+              <button className="btn-primary" onClick={handleNext} disabled={loading}>
+                {loading ? 'Saving...' : 'Next'} 
+                {!loading && (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginLeft: '8px'}}>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                )}
               </button>
             </div>
           </div>

@@ -1,9 +1,36 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import './Auth.css';
 
 function Auth({ onLogin, onSignUp }) {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    try {
+      const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
+      const response = await axios.post(`http://localhost:5000${endpoint}`, { email, password });
+      
+      // Store user ID to use in later setup steps
+      localStorage.setItem('tableflow_user_id', response.data.user.id);
+      
+      if (isLogin) {
+        onLogin && onLogin(email);
+      } else {
+        onSignUp && onSignUp(email);
+      }
+    } catch (err) {
+      setError(err.response?.data?.error || 'Authentication failed. Please check your credentials.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="auth-page-container">
@@ -110,7 +137,9 @@ function Auth({ onLogin, onSignUp }) {
               <p>{isLogin ? 'Login to access your dashboard' : 'Sign up to start setting up your restaurant'}</p>
             </div>
             
-            <form onSubmit={(e) => { e.preventDefault(); isLogin ? (onLogin && onLogin(email)) : (onSignUp && onSignUp(email)); }}>
+            {error && <div className="auth-error-message" style={{ color: '#ef4444', backgroundColor: '#fef2f2', padding: '10px', borderRadius: '6px', marginBottom: '15px', fontSize: '14px', border: '1px solid #f87171' }}>{error}</div>}
+            
+            <form onSubmit={handleSubmit}>
               <div className="auth-input-group">
                 <label htmlFor="email">Email address</label>
                 <div className="auth-input-field">
@@ -129,7 +158,7 @@ function Auth({ onLogin, onSignUp }) {
                     <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                     <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                   </svg>
-                  <input type="password" id="password" placeholder="Enter your password" />
+                  <input type="password" id="password" placeholder="Enter your password" value={password} onChange={e => setPassword(e.target.value)} required />
                   <button type="button" className="icon-right">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
@@ -141,7 +170,9 @@ function Auth({ onLogin, onSignUp }) {
               
               {isLogin && <a href="#" className="auth-forgot">Forgot password?</a>}
               
-              <button type="submit" className="auth-btn-primary">{isLogin ? 'Login' : 'Sign Up'}</button>
+              <button type="submit" className="auth-btn-primary" disabled={loading}>
+                {loading ? 'Processing...' : (isLogin ? 'Login' : 'Sign Up')}
+              </button>
               
               <div className="auth-separator">
                 <span>or continue with</span>

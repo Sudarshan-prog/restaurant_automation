@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import './TablesSetup.css';
 import diningImg from './assets/dining.png';
 import { useRestaurant } from './RestaurantContext';
+import axios from 'axios';
 
 function TablesSetup({ onBack, onNext }) {
   const { setTables, setSettings } = useRestaurant();
   const [numFloors, setNumFloors] = useState(1);
   const [floorData, setFloorData] = useState([{ id: 1, tables: 20, seatsPerTable: 4 }]);
+  const [loading, setLoading] = useState(false);
 
   const handleFloorsChange = (e) => {
     const count = parseInt(e.target.value);
@@ -22,8 +24,7 @@ function TablesSetup({ onBack, onNext }) {
     setFloorData(fd => fd.map(f => f.id === id ? { ...f, [field]: parseInt(val) || 0 } : f));
   };
 
-  const handleNext = () => {
-    // Generate the flat tables array based on floorData
+  const handleNext = async () => {
     let flatTables = [];
     let tableNum = 1;
     floorData.forEach(floor => {
@@ -37,11 +38,33 @@ function TablesSetup({ onBack, onNext }) {
       }
     });
     setTables(flatTables);
-    
-    // Also save floor data mapping in settings for easy access
     setSettings(prev => ({ ...prev, floorData }));
     
-    onNext();
+    setLoading(true);
+    try {
+      const restaurantId = localStorage.getItem('tableflow_restaurant_id');
+      if (!restaurantId) {
+        alert("Restaurant ID not found. Please go back and save restaurant details.");
+        return;
+      }
+
+      // Format tables for the backend
+      const tablesPayload = flatTables.map(t => ({
+        table_number: String(t.num),
+        seats: t.seats
+      }));
+
+      await axios.post(`http://localhost:5000/api/restaurant/${restaurantId}/tables`, {
+        tables: tablesPayload
+      });
+
+      onNext();
+    } catch (error) {
+      console.error("Error saving tables:", error);
+      alert("Failed to save tables. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -164,9 +187,9 @@ function TablesSetup({ onBack, onNext }) {
 
             <div className="form-actions">
               <button className="btn-secondary" onClick={onBack}>Back</button>
-              <button className="btn-primary" onClick={handleNext}>
-                Next Step
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              <button className="btn-primary" onClick={handleNext} disabled={loading}>
+                {loading ? 'Saving...' : 'Next Step'}
+                {!loading && <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>}
               </button>
             </div>
           </div>

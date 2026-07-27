@@ -4,7 +4,7 @@ import Auth from './Auth';
 import Setup from './Setup';
 import RestaurantDetails from './RestaurantDetails';
 import TablesSetup from './TablesSetup';
-import HardwareSetup from './HardwareSetup';
+import MenuSetup from './MenuSetup';
 import FinishSetup from './FinishSetup';
 import Dashboard from './Dashboard';
 import Overview from './admin/Overview';
@@ -48,7 +48,7 @@ function SetupStep3() {
 
 function SetupStep4() {
   const navigate = useNavigate();
-  return <HardwareSetup onBack={() => navigate('/setup/tables')} onNext={() => navigate('/setup/finish')} />;
+  return <MenuSetup onBack={() => navigate('/setup/tables')} onNext={() => navigate('/setup/finish')} />;
 }
 
 function SetupStep5() {
