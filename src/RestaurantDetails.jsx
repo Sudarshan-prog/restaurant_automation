@@ -1,8 +1,15 @@
 import React from 'react';
 import './RestaurantDetails.css';
 import mapAddressImg from './assets/map_address.png';
+import { useRestaurant } from './RestaurantContext';
 
 function RestaurantDetails({ onBack, onNext }) {
+  const { settings, setSettings } = useRestaurant();
+
+  const handleChange = (field, value) => {
+    setSettings(prev => ({ ...prev, [field]: value }));
+  };
+
   return (
     <div className="setup-wrapper">
       <nav className="top-nav">
@@ -17,30 +24,12 @@ function RestaurantDetails({ onBack, onNext }) {
           </span>
         </div>
         <div className="nav-actions">
-          <button className="help-btn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="12" cy="12" r="10"></circle>
-              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-              <line x1="12" y1="17" x2="12.01" y2="17"></line>
-            </svg>
-            Need help?
-          </button>
-          
-          <div className="divider-vertical"></div>
-          
-          <div className="user-profile">
-            <div className="avatar-circle">AM</div>
-            <span className="user-name">Alex Manager</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </div>
         </div>
       </nav>
 
-      <div className="setup-content">
+      <div className="setup-content setup-content-basic">
         <div className="setup-left">
-          <div className="stepper-container">
+          <div className="stepper-container-left">
             <div className="stepper-line">
               <div className="stepper-line-active" style={{width: '25%'}}></div>
             </div>
@@ -86,7 +75,7 @@ function RestaurantDetails({ onBack, onNext }) {
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                     <circle cx="12" cy="10" r="3"></circle>
                   </svg>
-                  <input type="text" placeholder="Enter full address" />
+                  <input type="text" placeholder="Enter full address" value={settings.address || ''} onChange={e => handleChange('address', e.target.value)} />
                 </div>
               </div>
               
@@ -107,7 +96,7 @@ function RestaurantDetails({ onBack, onNext }) {
                       <path d="M8 10h.01"></path>
                       <path d="M8 14h.01"></path>
                     </svg>
-                    <input type="text" placeholder="Enter city" />
+                    <input type="text" placeholder="e.g. New York" value={settings.city || ''} onChange={e => handleChange('city', e.target.value)} />
                   </div>
                 </div>
                 <div className="form-group half">
@@ -138,6 +127,7 @@ function RestaurantDetails({ onBack, onNext }) {
                       <option value="uk">United Kingdom</option>
                       <option value="ca">Canada</option>
                       <option value="au">Australia</option>
+                      <option value="in">India</option>
                     </select>
                     <svg className="select-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="6 9 12 15 18 9"></polyline>
