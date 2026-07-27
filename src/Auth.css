@@ -1,13 +1,10 @@
-/* Using strict CSS Grid for bulletproof layout */
-
 .auth-page-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   width: 100%;
   overflow-x: hidden;
-  overflow-y: auto;
-  background: url('./assets/background.png') no-repeat center center;
+  background: url('./assets/background.png') no-repeat top right;
   background-size: cover;
   background-color: #F9FAFB;
   font-family: inherit;
@@ -54,8 +51,8 @@
 .auth-hero-side {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 0 4rem 4rem 6rem;
+  justify-content: flex-start;
+  padding: 2rem 4rem 4rem 6rem;
 }
 
 .auth-hero-inner {
@@ -406,27 +403,48 @@
 }
 
 /* Keep side-by-side unless it's a small tablet/phone */
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
   .auth-split-layout {
     grid-template-columns: 1fr;
-    height: auto;
-    overflow-y: visible;
+    align-items: center;
   }
   
-  .auth-page-container {
-    height: auto;
-    overflow: visible;
+  .auth-hero-side {
+    padding: 2rem !important;
+    align-items: center;
+    text-align: center;
   }
 
-  .auth-hero-side, .auth-form-side {
-    padding: 2rem;
+  .auth-hero-inner {
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .auth-form-side {
+    padding: 2rem !important;
   }
 
   .auth-features {
-    gap: 1rem;
+    justify-content: center;
+    gap: 1.5rem;
   }
   
   .auth-feature::after {
     display: none;
+  }
+
+  .auth-trust {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .auth-title {
+    font-size: 2.5rem;
+  }
+  .auth-header-bar {
+    padding: 1.5rem 2rem;
   }
 }
